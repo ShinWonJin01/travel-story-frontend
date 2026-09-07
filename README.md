@@ -22,6 +22,8 @@
 
 - **Service:** https://travelstory-sgcp.onrender.com
 
+> 배포 서버가 일정 시간 사용되지 않은 경우 첫 요청 시 서버 기동으로 인해 응답이 다소 지연될 수 있습니다.
+
 ---
 
 ## Screenshots
