@@ -80,6 +80,11 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('@/views/PrivacyPolicyView.vue'),
+    },
   ],
 })
 

@@ -160,5 +160,34 @@ const handleLogin = async () => {
         회원가입
       </RouterLink>
     </p>
+
+    <p class="auth-legal">
+      Travel Story는 사진과 위치를 기반으로 여행 기록을 저장하고
+      함께 공유할 수 있는 서비스입니다.
+      <RouterLink to="/privacy">
+        개인정보처리방침
+      </RouterLink>
+    </p>
   </AuthShell>
 </template>
+
+<style scoped>
+.auth-legal {
+  margin: 18px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--tmr-text-sub);
+  text-align: center;
+}
+
+.auth-legal a {
+  margin-left: 4px;
+  color: var(--tmr-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-legal a:hover {
+  text-decoration: underline;
+}
+</style>
