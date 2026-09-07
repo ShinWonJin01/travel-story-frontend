@@ -185,6 +185,7 @@ const handleLogin = async () => {
   color: var(--tmr-primary);
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .auth-legal a:hover {
