@@ -33,6 +33,7 @@ const {
 } = useNotifications(currentMember)
 
 const memberNickname = computed(() => currentMember.value?.nickname ?? '마이페이지')
+const isAuthenticated = computed(() => currentMember.value !== null)
 const isHomePage = computed(() => route.name === 'home')
 const isTripsPage = computed(() => route.name === 'trips')
 const isTripDetailPage = computed(() => route.name === 'trip-detail')
@@ -141,13 +142,15 @@ onBeforeUnmount(() => {
       />
     </RouterLink>
 
-    <nav class="desktop-navigation">
+    <nav v-if="isAuthenticated" class="desktop-navigation">
       <RouterLink to="/">홈</RouterLink>
       <RouterLink to="/trips">여행 기록</RouterLink>
       <RouterLink to="/invitations">초대 관리</RouterLink>
     </nav>
 
-    <div class="desktop-actions">
+    <div v-else></div>
+
+    <div v-if="isAuthenticated" class="desktop-actions">
       <div class="notification-wrapper">
         <button
           class="notification-button"
@@ -184,6 +187,25 @@ onBeforeUnmount(() => {
           로그아웃
         </button>
       </div>
+    </div>
+
+    <div
+      v-else
+      class="desktop-actions public-actions"
+    >
+      <RouterLink
+        class="login-button"
+        to="/login"
+      >
+        로그인
+      </RouterLink>
+
+      <RouterLink
+        class="signup-button"
+        to="/signup"
+      >
+        회원가입
+      </RouterLink>
     </div>
   </header>
 
@@ -268,7 +290,7 @@ onBeforeUnmount(() => {
     <span v-else class="mobile-header-side"></span>
   </header>
 
-  <MobileBottomNavigation v-if="!isTripDetailPage" />
+  <MobileBottomNavigation v-if="isAuthenticated && !isTripDetailPage" />
 </template>
 
 <style scoped>
@@ -331,6 +353,42 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: flex-end;
   gap: 28px;
+}
+
+.public-actions {
+  gap: 8px;
+}
+
+.login-button,
+.signup-button {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.login-button {
+  border: 1px solid var(--tmr-border);
+  color: var(--tmr-text-sub);
+  background: var(--tmr-surface);
+}
+
+.login-button:hover {
+  border-color: var(--tmr-primary);
+  color: var(--tmr-primary);
+}
+
+.signup-button {
+  color: var(--tmr-surface);
+  background: var(--tmr-primary-dark);
+}
+
+.signup-button:hover {
+  background: var(--tmr-primary);
 }
 
 .account-actions {
