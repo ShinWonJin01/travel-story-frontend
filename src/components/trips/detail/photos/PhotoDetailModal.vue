@@ -270,7 +270,20 @@ onBeforeUnmount(destroyLocationMap)
         </div>
 
         <div v-if="editType === 'takenAt'" class="photo-editor">
-          <input v-model="takenAtDraft" type="datetime-local" />
+          <div class="datetime-input-wrapper">
+            <input
+              v-model="takenAtDraft"
+              type="datetime-local"
+              aria-label="촬영일 선택"
+            />
+
+            <span
+              v-if="!takenAtDraft"
+              class="datetime-placeholder"
+            >
+              촬영일을 선택해 주세요
+            </span>
+          </div>
 
           <div class="editor-actions">
             <button type="button" @click="resetEdit">
@@ -498,6 +511,20 @@ onBeforeUnmount(destroyLocationMap)
   border-color: var(--tmr-primary);
   color: var(--tmr-primary);
   background: var(--tmr-surface-soft);
+}
+
+.datetime-input-wrapper {
+  position: relative;
+}
+
+.datetime-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  color: var(--tmr-text-sub);
+  font-size: 13px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .photo-editor {
