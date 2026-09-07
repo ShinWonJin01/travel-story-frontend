@@ -283,6 +283,27 @@ const openPhotoUpload = () => {
   photoInputRef.value?.click()
 }
 
+const getCurrentLocalDateTime = () => {
+  const now = new Date()
+
+  const pad = (value: number) =>
+    String(value).padStart(2, '0')
+
+  return [
+    now.getFullYear(),
+    '-',
+    pad(now.getMonth() + 1),
+    '-',
+    pad(now.getDate()),
+    'T',
+    pad(now.getHours()),
+    ':',
+    pad(now.getMinutes()),
+    ':',
+    pad(now.getSeconds()),
+  ].join('')
+}
+
 const getCurrentLocation = () =>
   new Promise<CurrentLocationResult>((resolve) => {
     if (!window.isSecureContext) {
@@ -376,6 +397,9 @@ const handlePhotoSelect = async (event: Event) => {
         const currentLocation = await getCurrentLocation()
 
         if (currentLocation.success) {
+          const currentTakenAt =
+            getCurrentLocalDateTime()
+
           for (const photo of photosWithoutLocation) {
             await updatePhotoLocation(
               photo.id,
@@ -383,6 +407,13 @@ const handlePhotoSelect = async (event: Event) => {
               currentLocation.longitude,
               null,
             )
+
+            if (photo.takenAt === null) {
+              await updatePhotoTakenAt(
+                photo.id,
+                currentTakenAt,
+              )
+            }
           }
         } else {
           window.alert(getLocationErrorMessage(currentLocation))
